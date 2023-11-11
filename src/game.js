@@ -13,13 +13,13 @@ class Example extends Phaser.Scene {
     }
 
     create() {
-        this.add.image(400, 300, 'sky');
+        //this.add.image(400, 300, 'sky');
 
         const platforms = this.physics.add.staticGroup();
 
-        platforms.create(400, 568, 'ground').setScale(2).refreshBody();
-        platforms.create(600, 400, 'ground');
-        platforms.create(50, 250, 'ground');
+        platforms.create(400, 900, 'ground').setScale(5).refreshBody(); // this is the floor
+       // platforms.create(600, 400, 'ground');
+        //platforms.create(50, 250, 'ground');
 
         this.player = this.physics.add.sprite(100, 450, 'dude');
 
@@ -32,10 +32,10 @@ class Example extends Phaser.Scene {
         //  width, height = size of the elliptical path
         //  speed = speed the sprite moves along the path per frame
 
-        stars.add(new FlyingStar(this, 150, 100, 100, 100, 0.005), true);
-        stars.add(new FlyingStar(this, 500, 200, 40, 100, 0.005), true);
-        stars.add(new FlyingStar(this, 600, 200, 40, 100, -0.005), true);
-        stars.add(new FlyingStar(this, 700, 200, 40, 100, 0.01), true);
+        // stars.add(new FlyingStar(this, 150, 100, 100, 100, 0.005), true);
+        // stars.add(new FlyingStar(this, 500, 200, 40, 100, 0.005), true);
+        // stars.add(new FlyingStar(this, 600, 200, 40, 100, -0.005), true);
+        // stars.add(new FlyingStar(this, 700, 200, 40, 100, 0.01), true);
 
         this.anims.create({
             key: 'left',
@@ -121,8 +121,8 @@ class FlyingStar extends Phaser.Physics.Arcade.Sprite {
 
 const config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: window.innerWidth, // Set initial width to full window width
+    height: window.innerHeight, // Set initial height to full window height
     parent: 'phaser-example',
     physics: {
         default: 'arcade',
@@ -130,6 +130,12 @@ const config = {
             gravity: { y: 300 },
             debug: false
         }
+    },
+    scale: {
+        mode: Phaser.Scale.RESIZE, // Scale the game to fill the entire screen
+        parent: 'phaser-example',
+        width: '100%',
+        height: '100%'
     },
     scene: Example
 };
