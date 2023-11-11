@@ -1,10 +1,12 @@
 ﻿// https://labs.phaser.io/edit.html?src=src\physics\arcade\body%20on%20a%20path.js
 class Example extends Phaser.Scene {
     preload() {
-        this.load.image('sky', 'assets/sky.png');
-        this.load.image('ground', 'assets/platform.png');
-        this.load.image('star', 'assets/star.png');
-        this.load.spritesheet('dude', 'assets/dude.png', {
+        this.load.setBaseURL('https://labs.phaser.io');
+
+        this.load.image('sky', 'src/games/firstgame/assets/sky.png');
+        this.load.image('ground', 'src/games/firstgame/assets/platform.png');
+        this.load.image('star', 'src/games/firstgame/assets/star.png');
+        this.load.spritesheet('dude', 'src/games/firstgame/assets/dude.png', {
             frameWidth: 32,
             frameHeight: 48
         });
