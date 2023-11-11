@@ -1,5 +1,4 @@
-﻿// https://labs.phaser.io/edit.html?src=src\physics\arcade\body%20on%20a%20path.js
-class Example extends Phaser.Scene {
+﻿class Platformer extends Phaser.Scene {
     preload() {
         this.load.setBaseURL('https://labs.phaser.io');
 
@@ -13,15 +12,11 @@ class Example extends Phaser.Scene {
     }
 
     create() {
-        //this.add.image(400, 300, 'sky');
-
         const platforms = this.physics.add.staticGroup();
 
-        platforms.create(400, 900, 'ground').setScale(5).refreshBody(); // this is the floor
-       // platforms.create(600, 400, 'ground');
-        //platforms.create(50, 250, 'ground');
+        platforms.create(config.width*0.5, config.height*0.95, 'ground').setScale(5).refreshBody(); // this is the floor
 
-        this.player = this.physics.add.sprite(100, 450, 'dude');
+        this.player = this.physics.add.sprite(config.width*0.5, 450, 'dude');
 
         this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
@@ -30,12 +25,6 @@ class Example extends Phaser.Scene {
 
         //  x, y = center of the path
         //  width, height = size of the elliptical path
-        //  speed = speed the sprite moves along the path per frame
-
-        // stars.add(new FlyingStar(this, 150, 100, 100, 100, 0.005), true);
-        // stars.add(new FlyingStar(this, 500, 200, 40, 100, 0.005), true);
-        // stars.add(new FlyingStar(this, 600, 200, 40, 100, -0.005), true);
-        // stars.add(new FlyingStar(this, 700, 200, 40, 100, 0.01), true);
 
         this.anims.create({
             key: 'left',
@@ -68,12 +57,12 @@ class Example extends Phaser.Scene {
         const { left, right, up } = this.cursors;
 
         if (left.isDown) {
-            this.player.setVelocityX(-160);
+            this.player.setVelocityX(-200);
 
             this.player.anims.play('left', true);
         }
         else if (right.isDown) {
-            this.player.setVelocityX(160);
+            this.player.setVelocityX(200);
 
             this.player.anims.play('right', true);
         }
@@ -93,31 +82,6 @@ class Example extends Phaser.Scene {
     }
 }
 
-class FlyingStar extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y, width, height, speed) {
-        super(scene, x, y, 'star');
-
-        //  This is the path the sprite will follow
-        this.path = new Phaser.Curves.Ellipse(x, y, width, height);
-        this.pathIndex = 0;
-        this.pathSpeed = speed;
-        this.pathVector = new Phaser.Math.Vector2();
-
-        this.path.getPoint(0, this.pathVector);
-
-        this.setPosition(this.pathVector.x, this.pathVector.y);
-    }
-
-    preUpdate(time, delta) {
-        super.preUpdate(time, delta);
-
-        this.path.getPoint(this.pathIndex, this.pathVector);
-
-        this.setPosition(this.pathVector.x, this.pathVector.y);
-
-        this.pathIndex = Phaser.Math.Wrap(this.pathIndex + this.pathSpeed, 0, 1);
-    }
-}
 
 const config = {
     type: Phaser.AUTO,
@@ -127,17 +91,15 @@ const config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 300 },
+            gravity: { y: 9.8 * 60 },
             debug: false
         }
     },
     scale: {
         mode: Phaser.Scale.RESIZE, // Scale the game to fill the entire screen
-        parent: 'phaser-example',
-        width: '100%',
-        height: '100%'
+        autoCenter: Phaser.Scale.CENTER_BOTH
     },
-    scene: Example
+    scene: Platformer
 };
 
 const game = new Phaser.Game(config);

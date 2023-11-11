@@ -1,5 +1,6 @@
 {
   "dependencies": {
     "phaser": "^3.70.0"
-  }
+  },
+  "type": "module"
 }
